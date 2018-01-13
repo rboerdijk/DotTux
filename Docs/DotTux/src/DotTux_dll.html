@@ -1,0 +1,65 @@
+<!-- Copyright 2004 OTP Systems Oy. All rights reserved. -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+    <head>
+        <title>DotTux.dll</title>
+        <link rel="stylesheet" href="OTPDoc.css" type="text/css">
+    </head>
+    <body>
+        <div id="Banner"><img src="OTPDocBanner.png"></div>
+        <div id="Main">
+            <h1>DotTux.dll</h1>
+            <p>
+                DotTux.dll is the .NET assembly containing the .NET API for Tuxedo described in 
+                the <a href="api/index.html">DotTux Programming Reference</a>. The DotTux.dll 
+                file is located in the <code>bin</code> subdirectory of the DotTux directory.
+            </p>
+            <p>
+                &raquo; <a href="#compile">Compiling DotTux clients and servers using DotTux.dll</a><br>
+                &raquo; <a href="#run">Running DotTux clients using DotTux.dll</a><br>
+            </p>
+            <h2 id="compile">Compiling DotTux clients and servers using DotTux.dll</h2>
+            <p>
+                To compile a DotTux client or server using DotTux.dll, simply add the 
+                DotTux.dll file as a as a library reference to the compiler. A DotTux client 
+                can be compiled directly into an executable but a DotTux server must be 
+                compiled into a library assembly (or DLL). For example, the command for 
+                compiling the <a href="samples/SimpleClient.html">SimpleClient</a> class 
+                written in C# looks like this:
+                <pre>csc /reference:<i>DOTTUXDIR</i>\bin\DotTux.dll /out:SimpleClient.exe SimpleClient.cs</pre>
+                and the command for compiling the <a href="samples/SimpleServer.html">SimpleServer</a>
+                class written in C# looks like this:
+                <pre>csc /reference:<i>DOTTUXDIR</i>\bin\DotTux.dll /t:library /out:SimpleServer.dll SimpleServer.cs</pre>
+                In these examples, <code><i>DOTTUXDIR</i></code> is the DotTux directory.
+            </p>
+            <h2 id="run">Running DotTux clients using DotTux.dll</h2>
+            <p>
+                DotTux clients using DotTux.dll can be run as any other .NET executable. DotTux 
+                servers, on the other hand, must be run using the <a href="DotServer.html">DotServer</a>
+                executable.
+            </p>
+            <p>
+                To run a DotTux client using the DotTux.dll assembly, the DotTux.dll assembly 
+                must either be installed in the global assembly cache or copied to the 
+                application directory (i.e., the directory containing the client executable). 
+                Furthermore, the DotTux.dll assembly requires the following environment 
+                variables to be set at runtime:
+                <dl>
+                    <dt><code>PATH</code> </dt>
+                    <dd>
+                        Must be set to include the <code>bin</code> subdirectory of the DotTux 
+                        directory. For example:
+                        <pre>set PATH=%PATH%;C:\OTPSystems\DotTux-1.1.0\bin</pre>
+                    </dd>
+                </dl>
+                These environment variables must be set in addition to the Tuxedo system 
+                environment variables described in the Tuxedo installation guide (Chapter 6 
+                "Performing Post-Installation Tasks", section "Setting Environment variables on 
+                a Windows System") and the Tuxedo setup guide (Chapter 11, "Setting up 
+                Workstation Clients", section "Defining Workstation Clients").
+            </p>
+            <hr>
+            Copyright &copy; OTP Systems Oy. All rights reserved.
+        </div>
+    </body>
+</html>

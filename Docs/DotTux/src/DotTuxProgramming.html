@@ -1,0 +1,182 @@
+<!-- Copyright 2004 OTP Systems Oy. All rights reserved. -->
+<html dir="LTR">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252" />
+        <meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5" />
+        <title>DotTux Programming Reference (version 1.1)</title>
+        <xml></xml>
+        <link rel="stylesheet" type="text/css" href="MSDN.css" />
+    </head>
+    <body id="bodyID" class="dtBODY">
+        <div id="nsbanner">
+            <div id="bannerrow1">
+                <table class="bannerparthead" cellspacing="0">
+                    <tr id="hdr">
+                        <td class="runninghead">DotTux Programming Reference (version 1.1)</td>
+                        <td class="product">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div id="TitleRow">
+                <h1 class="dtH1">Overview</h1>
+            </div>
+        </div>
+        <div id="nstext">
+            <p>
+                This is the DotTux Programming Reference. This document describes the .NET API 
+                for Tuxedo provided by DotTux.
+            </p>
+            <h3 class="dtH3">The DotTux API</h3>
+            <p>
+                The DotTux API is a direct mapping of the Tuxedo's native C API to .NET. The 
+                methods of the <a href="DotTux.Atmi.ATMIMethods.html">DotTux.Atmi.ATMI</a> class, 
+                for example, are the .NET versions of Tuxedo's native ATMI functions. Similary, 
+                the methods of the <a href="DotTux.Fml32.FML32Methods.html">DotTux.Fml32.FML32</a>
+                class are the .NET versions of Tuxedo's native FML32 functions. The different 
+                Tuxedo data structures are also mapped to .NET in a straightforward manner, as 
+                shown by, for example, the <a href="DotTux.Atmi.TPSVCINFOFields.html">DotTux.Atmi.TPSVCINFO</a>,
+                <a href="DotTux.Atmi.TPINITFields.html">DotTux.Atmi.TPINIT</a> and <a href="DotTux.Atmi.TPQCTLFields.html">
+                    DotTux.Atmi.TPQCTL</a> class definitions.
+            </p>
+            <h3 class="dtH3">Differences with Tuxedo's Native C API</h3>
+            <p>
+                Although the DotTux API is mostly similar to Tuxedo's native C API, there are 
+                also some differences. In particular, the following topics deserve special 
+                attention.
+                <dl>
+                    <dt><b>Error and event reporting</b></dt>
+                    <dd>
+                        The DotTux API reports errors and events by throwing exceptions. The methods of 
+                        the DotTux.Atmi.ATMI class, for example, throw exceptions of type <a href="DotTux.Atmi.TPException.html">
+                            DotTux.Atmi.TPException</a> and the methods of the jtux.fml32.FML32 class 
+                        throw exceptions of type <a href="DotTux.Fml32.FException.html">DotTux.Fml32.FException</a>
+                        to signal the occurrence of errors and events.
+                    </dd>
+                    <dt><b>Typed buffer handling</b></dt>
+                    <dd>
+                        The DotTux API uses instances of the <a href="DotTux.ByteBuffer.html">DotTux.ByteBuffer</a>
+                        class to represent Tuxedo typed buffers. Special care should be taken that 
+                        these buffers are properly cleaned up as they are <em>not</em> managed by the 
+                        .NET garbage collector.
+                    </dd>
+                </dl>
+            </p>
+            <h3 class="dtH3">Sample applications</h3>
+            <p>
+                The following sample applications are available to get you started developing 
+                your own Tuxedo clients and servers in C#. For instructions on how to compile 
+                and run these samples see the <a href="../DotTux_dll.html">DotTux.dll</a> and <a href="../DotServer.html">
+                    DotServer</a> manual pages.
+            </p>
+            <div class="tablediv">
+                <table class="dtTABLE" cellspacing="0" ID="Table1">
+                    <tr valign="top">
+                        <th width="30%">
+                            Name</th>
+                        <th width="70%">
+                            Purpose</th>
+                    </tr>
+                    <tr valign="top">
+                        <td width="30%">
+                            <a href="../samples/SimpleServer.html">SimpleServer</a>
+                        </td>
+                        <td width="70%">Shows the basics of writing a Tuxedo server in C#.</td>
+                    </tr>
+                    <tr valign="top">
+                        <td width="30%">
+                            <a href="../samples/SimpleClient.html">SimpleClient</a>
+                        </td>
+                        <td width="70%">Shows the basics of calling a Tuxedo service from C#.</td>
+                    </tr>
+                    <tr valign="top">
+                        <td width="30%">
+                            <a href="../samples/StringUtils.html">StringUtils</a>
+                        </td>
+                        <td width="70%">Utility methods for dealing with Tuxedo STRING buffers in C#.</td>
+                    </tr>
+                    <tr valign="top">
+                        <td width="30%">
+                            <a href="../samples/SimpleAsyncClient.html">SimpleAsyncClient</a>
+                        </td>
+                        <td width="70%">Shows how to call a Tuxedo service asynchronously.</td>
+                    </tr>
+                    <tr valign="top">
+                        <td width="30%">
+                            <a href="../samples/ServerUtils.html">ServerUtils</a>
+                        </td>
+                        <td width="70%">Utility methods for implementing Tuxedo servers in C#.</td>
+                    </tr>
+                    <tr valign="top">
+                        <td width="30%">
+                            <a href="../samples/DownloadServer.html">DownloadServer</a>
+                        </td>
+                        <td width="70%">Shows how to write a conversational server.</td>
+                    </tr>
+                    <tr valign="top">
+                        <td width="30%">
+                            <a href="../samples/DownloadClient.html">DownloadClient</a>
+                        </td>
+                        <td width="70%">Shows how to write a conversational client.</td>
+                    </tr>
+                    <tr valign="top">
+                        <td width="30%">
+                            <a href="../samples/SimpleEnqueuer.html">SimpleEnqueuer</a>
+                        </td>
+                        <td width="70%">Shows how to a message in Tuxedo/Q queue.</td>
+                    </tr>
+                    <tr valign="top">
+                        <td width="30%">
+                            <a href="../samples/SimpleDequeuer.html">SimpleDequeuer</a>
+                        </td>
+                        <td width="70%">Shows how to dequeues a message from a Tuxedo /Q queue.</td>
+                    </tr>
+                    <tr valign="top">
+                        <td width="30%">
+                            <a href="../samples/UnsolServer.html">UnsolServer</a>
+                        </td>
+                        <td width="70%">Shows how to send unsolicited messages to clients.</td>
+                    </tr>
+                    <tr valign="top">
+                        <td width="30%">
+                            <a href="../samples/UnsolClient.html">UnsolClient</a>
+                        </td>
+                        <td width="70%">Shows how to handle unsolicited messages.</td>
+                    </tr>
+                    <tr valign="top">
+                        <td width="30%">
+                            <a href="../samples/TimePublisher.html">TimePublisher</a>
+                        </td>
+                        <td width="70%">Shows how to post events through the Tuxedo event broker.</td>
+                    </tr>
+                    <tr valign="top">
+                        <td width="30%">
+                            <a href="../samples/SimpleSubscriber.html">SimpleSubscriber</a>
+                        </td>
+                        <td width="70%">Shows how to subscribe to events posted through the Tuxedo event 
+                            broker.</td>
+                    </tr>
+                    <tr valign="top">
+                        <td width="30%">
+                            <a href="../samples/SimpleFML32Server.html">SimpleFML32Server</a>
+                        </td>
+                        <td width="70%">Shows how to read anw write FML32 buffers.</td>
+                    </tr>
+                    <tr valign="top">
+                        <td width="30%">
+                            <a href="../samples/SimpleFML32Client.html">SimpleFML32Client</a>
+                        </td>
+                        <td width="70%">Shows how to read and write FML32 buffers.</td>
+                    </tr>
+                </table>
+                <br />
+            </div>
+            <hr />
+            <div id="footer">
+                <p>
+                    <a>Copyright &copy; OTP Systems Oy. All rights reserved.</a>
+                </p>
+            </div>
+        </div>
+    </body>
+</html>

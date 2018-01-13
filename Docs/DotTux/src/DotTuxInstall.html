@@ -1,0 +1,134 @@
+<!-- Copyright 2004 OTP Systems Oy. All rights reserved. -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+    <head>
+        <title>DotTux Installation Guide</title>
+        <link rel="stylesheet" href="OTPDoc.css" type="text/css">
+    </head>
+    <body>
+        <div id="Banner"><img src="OTPDocBanner.png"></div>
+        <div id="Main">
+            <h1>DotTux Installation Guide</h1>
+            <p>
+                This document describes how to install DotTux on a server machine in your local 
+                Tuxedo environment.
+            </p>
+            <p>
+                &raquo; <a href="#prereqs">Prerequisites</a><br>
+                &raquo; <a href="#package">Installing the DotTux software package</a><br>
+                &raquo; <a href="#test">Testing the installation</a><br>
+            </p>
+            <h2 id="prereqs">Prerequisites</h2>
+            <p>
+                Before you start the installation, make sure the following prerequisites are 
+                met:
+                <ol>
+                    <li>
+                        Tuxedo version 8.1 is installed on the target machine.
+                    </li>
+                    <li>
+                        The .NET Framework version 1.1 or higher is installed on the target machine. 
+                        The .NET Framework can be downloaded from <a href="http://msdn.microsoft.com">http://msdn.microsoft.com</a>.
+                    </li>
+                    <li>
+                        You have the DotTux software package <code>DotTux-1.1.<i>x</i>-win32.zip</code>, 
+                        where <code><i>x</i></code> is the latest available patch level for DotTux 1.1.
+                    </li>
+                </ol>
+            </p>
+            <h2 id="package">Installing the DotTux software package</h2>
+            <p>
+                The DotTux software package can be installed by simply unpacking it in a local 
+                directory on the target machine. This will create a new subdirectory in the 
+                selected installation directory containing the DotTux software components. For 
+                example, if you unpack the <code>DotTux-1.1.<i>x</i>-win32.zip</code> software 
+                package in the directory <code>c:\OTPSystems</code> then a new DotTux directory <code>
+                    c:\OTPSystems\DotTux-1.1.<i>x</i></code> will be created.
+            </p>
+            <h2 id="test">Testing the installation</h2>
+            <p>
+                Execute the following steps to test the installation of DotTux.
+                <ol>
+                    <li>
+                        Open a new command window on the target machine.
+                    </li>
+                    <li>
+                        Create a new directory in a temporary location, for example:
+                        <pre>mkdir c:\Temp\Test</pre>
+                    </li>
+                    <li>
+                        Make the new directory the current working directory, for example:
+                        <pre>cd c:\Temp\Test</pre>
+                    </li>
+                    <li>
+                        Set the <code>TUXDIR</code> environment variable to point to the Tuxedo 
+                        installation directory, for example:
+                        <pre>set TUXDIR=c:\bea\tuxedo8.1</pre>
+                    </li>
+                    <li>
+                        Add <code>%TUXDIR%\bin</code> to the <code>PATH</code> environment variable, 
+                        for example:
+                        <pre>set PATH=%TUXDIR%\bin;%PATH%</pre>
+                    </li>
+                    <li>
+                        Set the <code>DOTTUXDIR</code> environment variable to point to the DotTux 
+                        installation directory, for example:
+                        <pre>set DOTTUXDIR=c:\OTPSystems\DotTux-1.1.0</pre>
+                    </li>
+                    <li>
+                        Add <code>%DOTTUXDIR%\bin</code> to the <code>PATH</code> environment variable, 
+                        for example:
+                        <pre>set PATH=%DOTTUXDIR%\bin;%PATH%</pre>
+                    </li>
+                    <li>
+                        Set the <code>TUXCONFIG</code> environment variable so that it points to a file 
+                        named <code>TUXCONFIG</code> in the current working directory, for example:
+                        <pre>set TUXCONFIG=c:\Temp\Test\TUXCONFIG</pre>
+                    </li>
+                    <li>
+                        Set the <code>ULOGPFX</code> environment variable so that the Tuxedo ULOG file 
+                        will be created in the current working directory, for example:
+                        <pre>set ULOGPFX=c:\Temp\Test\ULOG</pre>
+                    </li>
+                    <li>
+                        Run the following command:
+                        <pre>TestConfig</pre>
+                        This command generates a UBBCONFIG file called <code>test.ubb</code> that 
+                        contains the Tuxedo configuration for a small test application. If this command 
+                        fails then check the ULOG for error messages.
+                    </li>
+                    <li>
+                        Generate a binary Tuxedo configuaration file for the test application by 
+                        running the following command:
+                        <pre>tmloadcf -y test.ubb</pre>
+                    </li>
+                    <li>
+                        Boot the test application using the following command:
+                        <pre>tmboot -y</pre>
+                        The test application should boot without any errors. You should see this:
+                        <pre>Booting admin processes ...
+
+exec BBL -A :
+        process id=1784 ... Started.
+
+Booting server processes ...
+
+exec DotServer -- -s TEST DotTux DotTux.Install.TestServer :
+        process id=1644 ... Started.
+2 processes started.</pre>
+                    </li>
+                    <li>
+                        Run the following command.
+                        <pre>TestClient</pre>
+                        You should see the following:
+                        <pre>Installation OK</pre>
+                    </li>
+                </ol>
+                If all of the above steps succeeded then DotTux is installed correctly. You can 
+                now shut down and clean up the test environment.
+            </p>
+            <hr>
+            Copyright &copy; OTP Systems Oy. All rights reserved.
+        </div>
+    </body>
+</html>

@@ -1,0 +1,59 @@
+# Copyright 2004 OTP Systems Oy. All rights reserved.
+
+include $(BASE_DIR)/CTools/Makefiles/Makefile.$(PLATFORM)
+
+ifndef TUX_VERSION
+$(error Environment variable TUX_VERSION not set)
+endif
+
+ifeq ($(TUX_VERSION),81)
+NICE_TUX_VERSION=8.1
+endif
+
+ifndef NICE_TUX_VERSION
+$(error Unsupported Tuxedo version)
+endif
+
+include $(BASE_DIR)/CTools/Tuxedo/Makefiles/Makefile.Tuxedo
+
+DotTux_release := 1.1
+DotTux_patch_level := 0
+DotTux_version := $(DotTux_release).$(DotTux_patch_level)
+
+# Don't forget to update Classes/src/cs/AssemblyAttributes.cs as well (!)
+
+DotTux_version_defines := -DDOTTUX_RELEASE=$(DotTux_release) -DDOTTUX_PATCH_LEVEL=$(DotTux_patch_level) -DTUX_VERSION=$(TUX_VERSION)
+
+ABS_BASE_DIR := $(CurrentDir)/$(BASE_DIR)
+
+MSVCR71DLL := $(ABS_BASE_DIR)/Redistribute/Microsoft/MSVCRuntimes/msvcr71.dll
+
+OTPPlatformLibrary := $(ABS_BASE_DIR)/CTools/Platform/Library/build/$(LibPrefix)OTPPlatform$(LibSuffix)
+
+OTPTuxedoLibrary := $(ABS_BASE_DIR)/CTools/Tuxedo/Library/build/$(LibPrefix)OTPTuxedo$(LibSuffix)
+
+Qipcrm := $(ABS_BASE_DIR)/CTools/Tuxedo/Qipcrm/build/Qipcrm$(ExeSuffix)
+
+DotTuxAssembly := $(ABS_BASE_DIR)/Classes/build/DotTux.dll
+
+DotTuxWSAssembly := $(ABS_BASE_DIR)/Classes/build/DotTuxWS.dll
+
+DotTuxInteropDLL := $(ABS_BASE_DIR)/Interop/build/DotTuxInterop.dll
+
+DotTuxWSInteropDLL := $(ABS_BASE_DIR)/Interop/build/DotTuxWSInterop.dll
+
+DotTuxInteropLinkLibrary := $(ABS_BASE_DIR)/Interop/build/DotTuxInterop.lib
+
+DotClient := $(ABS_BASE_DIR)/DotClient/build/DotClient.exe
+
+DotServer := $(ABS_BASE_DIR)/DotServer/build/DotServer.exe
+
+INCLUDE_DIRS := CTools/Tuxedo/Library/src/c CTools/Platform/Library/src/c
+
+INCLUDES := $(addprefix -I$(ABS_BASE_DIR)/,$(INCLUDE_DIRS)) -I$(TUXDIR)/include
+
+CFLAGS := $(CFLAGS) $(DotTux_version_defines) $(INCLUDES)
+
+upload := pscp
+
+upload_target := disn3h47@www.otpsystems.com:/var/web2/download

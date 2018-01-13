@@ -1,0 +1,55 @@
+<!-- Copyright 2004 OTP Systems Oy. All rights reserved. -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+    <head>
+        <title>DotTuxWS.dll</title>
+        <link rel="stylesheet" href="OTPDoc.css" type="text/css">
+    </head>
+    <body>
+        <div id="Banner"><img src="OTPDocBanner.png"></div>
+        <div id="Main">
+            <h1>DotTuxWS.dll</h1>
+            <p>
+                DotTuxWS.dll is the .NET assembly containing the .NET API for Tuxedo/WS 
+                described in the <a href="api/index.html">DotTux Workstation Programming Reference</a>. 
+                The DotTuxWS.dll file is located in the <code>bin</code> subdirectory of the 
+                DotTux Workstation directory.
+            </p>
+            <p>
+                &raquo; <a href="#compile">Compiling DotTux Workstation clients using DotTuxWS.dll</a><br>
+                &raquo; <a href="#run">Running DotTux Workstation clients using DotTuxWS.dll</a><br>
+            </p>
+            <h2 id="compile">Compiling DotTux Workstation client using DotTuxWS.dll</h2>
+            <p>
+                To compile a DotTux Workstation client using DotTuxWS.dll, simply add the 
+                DotTuxWS.dll file as a as a library reference to the compiler. For example, the 
+                command for compiling the <a href="samples/SimpleClient.html">SimpleClient</a> class 
+                written in C# looks like this:
+                <pre>csc /reference:<i>DOTTUXWSDIR</i>\bin\DotTuxWS.dll /out:SimpleClient.exe SimpleClient.cs</pre>
+                where <code><i>DOTTUXWSDIR</i></code> is the DotTux Workstation directory.
+            </p>
+            <h2 id="run">Running DotTux Workstation clients using DotTuxWS.dll</h2>
+            <p>
+                To run a DotTux Workstation client using the DotTuxWS.dll assembly, the 
+                DotTuxWS.dll assembly must either be installed in the global assembly cache or 
+                copied to the application directory (i.e., the directory containing the client 
+                executable). Furthermore, the DotTuxWS.dll assembly requires the following 
+                environment variables to be set at runtime:
+                <dl>
+                    <dt><code>PATH</code> </dt>
+                    <dd>
+                        Must be set to include the <code>bin</code> subdirectory of the DotTux 
+                        Workstation directory. For example:
+                        <pre>set PATH=%PATH%;C:\OTPSystems\DotTuxWS-1.1.0\bin</pre>
+                    </dd>
+                </dl>
+                These environment variables must be set in addition to the Tuxedo system 
+                environment variables described in the Tuxedo installation guide (Chapter 6 
+                "Performing Post-Installation Tasks", section "Setting Environment variables on 
+                a Windows System").
+            </p>
+            <hr>
+            Copyright &copy; OTP Systems Oy. All rights reserved.
+        </div>
+    </body>
+</html>

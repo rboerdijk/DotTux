@@ -1,0 +1,161 @@
+<!-- Copyright 2004 OTP Systems Oy. All rights reserved. -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+    <head>
+        <title>DotServer</title>
+        <link rel="stylesheet" href="OTPDoc.css" type="text/css">
+    </head>
+    <body>
+        <div id="Banner"><img src="OTPDocBanner.png"></div>
+        <div id="Main">
+            <h1>DotServer</h1>
+            <p>
+                DotServer is the DotTux server executable for running .NET based Tuxedo 
+                servers. The DotServer executable is located in the <code>bin</code> subdirectory 
+                of the DotTux directory.
+            </p>
+            <p>
+                &raquo; <a href="#srvcls">Server class requirements</a><br>
+                &raquo; <a href="#config">Configuring a DotServer instance</a><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&raquo; <a href="#clopt">Command line options</a><br>
+            </p>
+            <h2 id="srvcls">Server class requirements</h2>
+            <p>
+                A .NET based Tuxedo server consists of a server class and all its supporting 
+                classes. A server class is a .NET class designed to handle Tuxedo service 
+                requests. A server class defines one or more service routines and a number of 
+                optional server initialization and termination methods.
+            </p>
+            <p>
+                A service routine is a method of a server class that gets invoked by the 
+                DotServer executable to handle service requests for a particular Tuxedo 
+                service. A service routine must be defined with the following signature:
+                <pre>public static void <i>tpservice</i>(<a href="api/DotTux.Atmi.TPSVCINFO.html">DotTux.Atmi.TPSVCINFO</a>)
+{
+    ...
+}</pre>
+                A service routine must either return a reply using <a href="api/DotTux.Atmi.ATMI.tpreturn.html">
+                    DotTux.Atmi.ATMI.tpreturn</a> or forward the service request to another 
+                service using <a href="api/DotTux.Atmi.ATMI.tpforward.html">DotTux.Atmi.ATMI.tpforward</a>. 
+                For a complete description of the required behaviour of a service routine see 
+                the Tuxedo tpservice(3c) manual page.
+            </p>
+            <p>
+                Besides one or more service routines, a server class can define any of the 
+                following server initialization and termination methods:
+                <pre>public static int tpsvrinit(string[] args)
+{
+    ...
+}
+
+public static int tpsvrthrinit(string[] args)
+{
+    ...
+}
+
+public static void tpsvrthrdone()
+{
+    ...
+}
+
+public static void tpsvrdone()
+{
+   ...
+}</pre>
+                The required behaviour of these methods is described in the Tuxedo 
+                tpsvrinit(3c), tpsvrthrinit(3c), tpsvrthrdone(3c) and tpsvrdone(3c) manual 
+                pages, respectively.
+            </p>
+            <p>
+                The <a href="api/index.html">DotTux Programming Guide</a> provides a number of 
+                sample server classes. The <a href="DotTux_dll.html">DotTux.dll</a> manual page 
+                explains how to compile a DotTux server using the DotTux.dll assembly.
+            </p>
+            <h2 id="config">Configuring a DotServer instance</h2>
+            <p>
+                The Tuxedo configuration of a DotServer instance looks like this:
+                <pre>*SERVERS
+
+"DotServer" SRVGRP="<i>identifier</i>" 
+            SRVID=<i>number</i>
+            CLOPT="[-A][<i>servopts options</i>] -- [-s <i>svcspec</i>] <i>library</i> <i>class</i> [<i>arg</i>...]"
+            MINDISPATCHTHREADS=<i>number</i> 
+            MAXDISPATCHTHREADS=<i>number</i>
+            ENVFILE="<i>path</i>"
+</pre>
+            </p>
+            <h3 id="clopt">Command line options</h3>
+            <p>
+                The following command line parameters can be set in the CLOPT of a DotServer.
+                <dl>
+                    <dt><code>-s <i>svcspec</i></code></dt>
+                    <dd>
+                        Maps Tuxedo service names onto a service routine defined by the server class. A <code>
+                            -s</code> command line parameter can be specified in one of the following 
+                        formats:
+                        <dl>
+                            <dt><code>-s :<i>method</i></code></dt>
+                            <dd>
+                                This format identifies the named method as a service routine. This 
+                                identification allows the named method to be used as a service routine for 
+                                services advertised dynamically using the <a href="api/DotTux.Atmi.ATMI.tpadvertise">
+                                    ATMI.tpadvertise</a> method.
+                            </dd>
+                            <dt><code>-s <i>svc1</i>[,<i>svc2</i>...]:<i>method</i></code></dt>.
+                            <dd>
+                                As the previous format, this format identifies the named method as a service 
+                                routine, allowing it to be used as a service routine for dynamically advertised 
+                                services. Furthermore, this format specifies an initial mapping of the Tuxedo 
+                                service names <code><i>svc1</i>[,<i>svc2</i>...]</code> to the given service 
+                                routine. The DotServer will automatically advertise these service names at 
+                                startup.
+                            </dd>
+                            <dt><code>-s <i>svc1</i>[,<i>svc2</i>...]</code></dt>
+                            <dd>
+                                This format identifies <code><i>svc1</i>[,<i>svc2</i>...]</code> as service 
+                                routines as well as initial services to be advertised by the DotServer at 
+                                startup. This format is short for <code>-s <i>svc1</i>:<i>svc1</i> [-s <i>svc2</i>:<i>svc2</i>
+                                    ...]</code> in the previous format.
+                            </dd>
+                            <dt><code>-s @<i>file</i></code></dt>
+                            <dd>
+                                This format specifies <code><i>file</i> </code>as the name of a file containing 
+                                service mapping specifications. The DotServer ignores empty lines and any text 
+                                on a line following the # character in this file. Each remaining line is 
+                                treated by the DotServer as if it were passed as the argument of a <code>-s</code>
+                                command line option in one of the previously three formats.
+                            </dd>
+                        </dl>
+                        The <code>-s</code> parameter can be specified as many times as needed. The <code>-s</code>
+                        parameter can be omitted in case the server does not advertise any services.
+                    </dd>
+                    <dt><code><i>library</i></code></dt>
+                    <dd>
+                        Specifies the library assembly containing the server class to run. This can be 
+                        either the name of a file containing the assembly metadata or the name of an 
+                        assembly installed in the global assembly cache. How to create a library 
+                        assembly containing a server class is described in the <a href="DotTux_dll.html">DotTux.dll 
+                            Manual Page</a>.
+                    </dd>
+                    <dt><code><i>class</i></code></dt>
+                    <dd>
+                        Specifies the name of the server class to run. This class must define all the 
+                        service routines identified by any preceding <code>-s</code> command line 
+                        parameters.
+                    </dd>
+                    <dt><code><i>arg</i>...</code></dt>
+                    <dd>
+                        Command line parameters following the name of the server class are passed as 
+                        arguments to the tpsvrinit() and tpsvrthrinit() methods of the server class, if 
+                        defined.
+                    </dd>
+                </dl>
+                For example, the DotServer CLOPT for running the <a href="samles/SimpleServer.html">
+                    SimpleServer</a> class looks like this:
+                <pre>CLOPT="-- -s TOUPPER SimpleServer.dll SimpleServer"</pre>
+            </p>
+            <hr>
+            Copyright &copy; 2004 OTP Systems Oy. All rights reserved.
+        </div>
+    </body>
+</html>
